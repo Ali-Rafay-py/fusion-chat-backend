@@ -44,3 +44,11 @@ async def websocket_endpoint(websocket: WebSocket):
                 await client.send_text(message)
     except:
         connected_clients.remove(websocket)
+import uvicorn
+import os
+
+if __name__ == "__main__":
+    port = int(os.getenv("PORT", 8000))  # Get the correct port from Railway
+    print(f"Starting server on port {port}...")  # Debugging message
+    uvicorn.run("main:app", host="0.0.0.0", port=port)
+
