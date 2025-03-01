@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fusion Chat</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        #chat-box {
+            width: 50%;
+            height: 300px;
+            border: 1px solid #ccc;
+            overflow-y: auto;
+            margin: 20px auto;
+            padding: 10px;
+            background: white;
+        }
+        input {
+            padding: 10px;
+            width: 60%;
+            margin-right: 10px;
+        }
+        button {
+            padding: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Fusion Chat</h1>
+    <div id="chat-box"></div>
+    <input type="text" id="messageInput" placeholder="Type a message..." />
+    <button onclick="sendMessage()">Send</button>
+
+    <script>
+        // Establish WebSocket connection
+        let socket = new WebSocket("ws://127.0.0.1:8000/ws");
+
+        socket.onopen = function () {
+            console.log("Connected to the WebSocket server.");
+        };
+
+        socket.onmessage = function (event) {
+            let chatBox = document.getElementById("chat-box");
+            let messageElement = document.createElement("p");
+            messageElement.textContent = event.data;
+            chatBox.appendChild(messageElement);
+            chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll to the latest message
+        };
+
+        socket.onclose = function () {
+            console.log("WebSocket connection closed.");
+        };
+
+        function sendMessage() {
+            let messageInput = document.getElementById("messageInput");
+            let message = messageInput.value;
+            if (message) {
+                socket.send(message);
+                messageInput.value = ""; // Clear input after sending
+            }
+        }
+    </script>
+
+</body>
+</html>
