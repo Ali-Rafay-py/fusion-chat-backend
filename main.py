@@ -47,9 +47,11 @@ async def websocket_endpoint(websocket: WebSocket):
 import uvicorn
 import os
 
+app_variable = "main:app"  # Make sure this matches your app instance name
+
 if __name__ == "__main__":
-    port = int(os.getenv("PORT", 8000))  # Use Railway's assigned port
+    port = int(os.getenv("PORT", 8000))  # Use Railway-assigned port
     print(f"🚀 Starting FastAPI on port {port}...")  # Debugging log
-    uvicorn.run("main:app", host="0.0.0.0", port=port)
+    uvicorn.run(app_variable, host="0.0.0.0", port=port, reload=True)
 
 
