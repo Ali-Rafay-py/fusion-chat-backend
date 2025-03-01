@@ -25,9 +25,11 @@ templates = Jinja2Templates(directory="templates")
 connected_clients: List[WebSocket] = []
 
 # Serve the index.html page
+# Root route (Fixes Not Found error)
 @app.get("/")
-async def get_homepage(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+async def home():
+    return {"message": "Fusion Chat Backend is Running!"}
+
 
 # WebSocket endpoint for real-time chat
 @app.websocket("/ws")
