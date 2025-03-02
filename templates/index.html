@@ -41,7 +41,8 @@
 
     <script>
         // Establish WebSocket connection
-        let socket = new WebSocket("ws://127.0.0.1:8000/ws");
+        let socket = new WebSocket("https://fusionchatt.netlify.app/");
+
 
         socket.onopen = function () {
             console.log("Connected to the WebSocket server.");
